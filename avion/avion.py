@@ -5,7 +5,7 @@ class Avion:
         self._brzina = 0
         self._raspon = 0
         self.__id = avion_id
-        self.__select_avion_sql = '''SELECT mjesto_proizvodnje, naziv, brzina, raspon FROM avion WHERE id_avion = ?; '''
+        self.__select_avion_sql = '''SELECT  naziv, mjesto_proizvodnje, brzina, raspon FROM avion WHERE id_avion = ?; '''
 
     @property
     def id(self):
@@ -48,7 +48,7 @@ class Avion:
 
 
     def ispis(self):
-       print( f'Naziv: {self.naziv} \nMjesto proizvodnje:{self.mjesto_proizvodnje}\n Brzina:{self._brzina} \n Raspon: {self._raspon}')
+       print( f'Naziv: {self.naziv} \nMjesto proizvodnje:{self.mjesto_proizvodnje}\n Brzina:{self._brzina} km/h \n Raspon: {self._raspon} m')
 
 
     def dohvatiAvion(self, cur):

@@ -5,11 +5,11 @@ con = sqlite3.connect('Projekt.db')
 cur = con.cursor()
 
 
-vlasnik_string = input(f'Unesite <ime prezime> platitelja: ')
-lista = vlasnik_string.split()
+vlasnik_ime = input(f'Unesite <ime> vlasnika: ')
+
 
 vlasnik = Korisnik()
-found = vlasnik.dohvatiKorisnika(lista[0], lista[1], cur)
+found = vlasnik.dohvatiKorisnika(vlasnik_ime, cur)
 if not found:
     print('\nNema platitelja/osobe')
     exit(1)
