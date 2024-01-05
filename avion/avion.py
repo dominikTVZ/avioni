@@ -1,11 +1,12 @@
 class Avion:
+    avioni = []
     def __init__(self, avion_id = 0):
         self._mjesto_proizvodnje = ""
         self._naziv = ""
         self._brzina = 0
         self._raspon = 0
         self.__id = avion_id
-        self.__select_avion_sql = '''SELECT  naziv, mjesto_proizvodnje, brzina, raspon FROM avion WHERE id_avion = ?; '''
+        self.__select_avion_sql = '''SELECT  naziv, mjesto_proizvodnje, brzina, raspon FROM avion WHERE korisnik_id= ?; '''
 
     @property
     def id(self):
@@ -46,21 +47,26 @@ class Avion:
     def raspon(self, raspon):
         self._raspon = raspon
 
-
     def ispis(self):
-       print( f'Naziv: {self.naziv} \nMjesto proizvodnje:{self.mjesto_proizvodnje}\n Brzina:{self._brzina} km/h \n Raspon: {self._raspon} m')
+        for avion in self.avioni:
+            print(f'Naziv aviona: {avion.naziv}')
+            print(f'Mjesto proizvodnje: {avion.mjesto_proizvodnje}')
+            print(f'Brzina: {avion.brzina} km/h')
+            print(f'Raspon krila aviona: {avion.raspon} m')
+
+
 
 
     def dohvatiAvion(self, cur):
         found = True
         tapl = (self.id, )
         res = cur.execute(self.__select_avion_sql, tapl)
-        redak = res.fetchone()
-        if redak is None:
-            found = False
-        else:
-            self.naziv = redak[0]
-            self.mjesto_proizvodnje = redak[1]
-            self.brzina = redak[2]
-            self.raspon = redak[3]
+        redovi = res.fetchall()
+        for redak in redovi:
+            avion = Avion()  # Stvorite novu instancu aviona
+            avion.naziv = redak[0]
+            avion.mjesto_proizvodnje = redak[1]
+            avion.brzina = redak[2]
+            avion.raspon = redak[3]
+            self.avioni.append(avion)  # Dodajte avion u listu aviona
         return found
